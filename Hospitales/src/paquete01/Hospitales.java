@@ -11,8 +11,15 @@ public class Hospitales {
     private String dirHospital;
     
     
-    public  Hospitales(String n){
-        nombre = n;   
+    public  Hospitales(String n, Ciudad c, int ne, Medicos[] cm, Enfermeros[] ce, String dir){
+        
+        nombre = n;  
+        ciudad = c;
+        nEspecialidades = ne;
+        cMedicos = cm;
+        cEnfermeros = ce;
+        dirHospital = dir;
+        
     }
 
     
@@ -36,8 +43,23 @@ public class Hospitales {
             cEnfermeros = n;
           
         }
-        public void establecerTSueldos(double n){
-            tSueldos = n;
+        public void establecerTSueldos(){
+            
+        double sumaM = 0;
+        double sumaE = 0;
+        
+        for (int i = 0; i < obtenerCMedicos().length; i++) {
+            sumaM = sumaM + obtenerCMedicos()[i].obtenerSueldo();
+        }
+        
+        for (int i = 0; i < obtenerCEnfermeros().length; i++) {
+            
+            sumaE = sumaE + obtenerCEnfermeros()[i].obtenerSueldo();
+        }  
+        
+        double sumaT = sumaM + sumaE;
+        
+        tSueldos = sumaT;
             
         }
         public void establecerDirHospital(String n){
@@ -76,30 +98,42 @@ public class Hospitales {
             return dirHospital;
         
         }
-        /*
+       public String toString() {
+        String cadena = String.format("%s\n"
+                + "Direccion: %s\n"
+                + "Ciudad: %s\n"
+                + "Provincia: %s\n"
+                + "Numero de especialidades: %d\n"
+                + "Listado de medicos\n", 
+                nombre,
+                dirHospital,
+                ciudad.obtenerNombre(),
+                ciudad.obtenerProvincia(),
+                nEspecialidades);
+        for (int i = 0; i < cMedicos.length; i++) {
+            cadena = String.format("%s- %s - sueldo: %.2f - %s\n",
+                    cadena, 
+                    cMedicos[i].obtenerNombre(),
+                    cMedicos[i].obtenerSueldo(),
+                    cMedicos[i].obtenerEspecialidad());
         }
-    @Override
-    public String ToString() {
-        String cadena = String.format("HOSPITAL %s\nDireccion: %s\n"
-                + "Ciudad: %s\nProvincia: %s\n", obtenerNombreHospital(),
-                obtenerCiudad().obtenerBarrio(), obtenerCiudad().obtenerNombre(),
-                obtenerCiudad().obtenerProvincia());
-        for (int i = 0; i < obtenerConjuntoMedicos().length; i++) {
-            cadena = String.format("%s-%s - sueldo: %.2f - %s", cadena,
-                    obtenerConjuntoMedicos()[i].obtenerNombreMedico(),
-                    obtenerConjuntoMedicos()[i].obtenerSueldoMensualMedico(),
-                    obtenerConjuntoMedicos()[i].obtenerEspecialidadMedico());
+        cadena = String.format("%sListado de enfermeros(as)\n", cadena);
+        for (int i = 0; i < cEnfermeros.length; i++) {
+            cadena = String.format("%s- %s - sueldo: %.2f - %s\n",
+                    cadena, 
+                    cEnfermeros[i].obtenerNombre(),
+                    cEnfermeros[i].obtenerSueldo(),
+                    cEnfermeros[i].obtenerContrato());
+            
+         
         }
-        for (int i = 0; i < obtenerConjuntoEnfermeros().length; i++) {
-            cadena = String.format("%s-%s - sueldo: %.2f - %s", cadena,
-                    obtenerConjuntoEnfermeros()[i].obtenerNombreEnfermero(),
-                    obtenerConjuntoEnfermeros()[i].obtenerSueldoEnfermero(),
-                    obtenerConjuntoEnfermeros()[i].obtenerTipoEnfermero());
-        }
+        cadena = String.format("%s\nTotal de sueldos a pagar por mes: %.2f",
+                cadena, obtenerTSueldos());
+        
         return cadena;
+                   
     }
-}
-    */     
+              
 }
 
                 
